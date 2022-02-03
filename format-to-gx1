@@ -1,0 +1,26 @@
+#!/bin/bash
+#Format CAWCR data to gx1 grid.
+#read year
+
+echo "Run, 2006!"
+
+echo 'Are you sure you want to format all of 2006?'
+
+read yes
+
+files=/Users/noahday/github/cice-dirs/input/*
+
+
+for file in `find . -name 'gridded_ww3.glob_24m.2007*'`
+do
+  filetemp=$(basename $file)
+  filetemp="${filetemp#*.}"
+  filetemp="${filetemp#*.}"
+  filetemp="${filetemp%.*}"
+  filetemp="ww3_${filetemp}.nc"
+
+  echo "Starting $filetemp"
+  #echo $(basename $file)
+  cdo remapbil,gridgx1.nc $file $filetemp
+done
+echo "Formatting complete."
