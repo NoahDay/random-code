@@ -1,0 +1,23 @@
+---
+title: "MIZ width"
+author: "Noah Day"
+date: "11/02/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(MASS)
+library(segmented)
+```
+
+
+```{r cars}
+
+data(stagnant)
+os<-segmented(lm(y~x,data=stagnant),seg.Z=~x,psi=-.8)
+draw.history(os) #diagnostics with boot restarting
+os<-segmented(lm(y~x,data=stagnant),seg.Z=~x,psi=-.8, control=seg.control(n.boot=0))
+draw.history(os) #diagnostics without boot restarting
+```
+
