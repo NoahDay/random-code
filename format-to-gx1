@@ -9,12 +9,12 @@ read year
 VAR1="Hello,"
 VAR2=" World"
 VAR3="$VAR1$VAR2"
-echo "$VAR3"
+#echo "$VAR3"
 gridded="gridded_ww3.glob_24m."
 file_name="$gridded$year"
 echo "$file_name"
-
-for file in `find /Users/noahday/github/cice-dirs/input -name 'file_name*'`
+cd /Users/noahday/github/cice-dirs/input
+for file in `find /Users/noahday/github/cice-dirs/input -name 'gridded_ww3.glob_24m.2010*'`#'file_name*'`
 #"gridded_ww3.glob_24m.2007*"`
 do
   filetemp=$(basename $file)
@@ -25,6 +25,6 @@ do
   echo "$file"
   echo "Starting $filetemp"
 
-  #cdo remapbil,gridgx1.nc $file $filetemp
+  cdo remapbil,gridgx1.nc $file $filetemp
 done
 echo "Formatting complete."
