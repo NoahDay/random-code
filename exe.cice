@@ -1,0 +1,8 @@
+#!/bin/bash
+# 1. Build CICE
+# 2. Run CICE
+# 3. Email me when it's done
+#./cice.build
+#./cice.run
+command; echo "Process done" | mail -s "CICE run completed successfully!" noah.day@adelaide.edu.au
+#echo "Sending an attachment." | mutt -a ice_in -s "attachment" noah.day@adelaide.edu.au
