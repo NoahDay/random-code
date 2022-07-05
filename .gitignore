@@ -1,2 +1,7 @@
 
 *.nc
+notebooks/bin/
+notebooks/lib/
+notebooks/etc/
+notebooks/share/
+.vscode/
