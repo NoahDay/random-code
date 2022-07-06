@@ -302,8 +302,9 @@ def init_ncout(ncout,nc1,llat,llon):
     dates.append(nc1['time'][0] + nc1['time'][1])
     # loop over remaining
     for h in nc1['time'][1:-1]:
-        for ft in nc1['time'][:]:
-            dates.append(h + ft)
+        #for ft in nc1['time'][:]: ND: commenting out
+            #dates.append(h + ft)
+        dates.append(h)
 
     # include only first forecast_time of last initial time
     dates.append(nc1['time'][-1] + nc1['time'][0])
@@ -395,43 +396,41 @@ if __name__ == "__main__":
         
         # do interpolation
         print("Interpolating ", var)
-
-        if var.find('prsn') > 0: # ave3r in var
+        
+        print("Variable ", var)
+  
+        
+        print("prefix ", fprefix)
+        #if var.find('prsn') > 0: # ave3r in var
+        if fprefix in ['prsn_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_','rsds_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_','rlds_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_']:
             # use bilinear here
+            print("IF enacted ", var)
             d = rgrd_bilinear(jra_ds[var][:,:,:]) # ND: changing from 4D to 3D [:,:,:,:]
-
+            print("D has shape ", d.shape)
+            print("D",d[1,:,:])
+            print("Data has shape ", data.shape)
+            for t in range(d.shape[1]):
+                print('indx =', t)
+                data[t,:,:] = d[t,:,:]
             # write to file in correct time order
-            for t in range(d.shape[0]):
-                #for n in range(d.shape[1]):
-                 print('indx t = ', t)
-                 data[t,:,:] = d[t,:,:]
-        elif var.find('rsds') > 0: # ave3r in var
-            # use bilinear here
-            d = rgrd_bilinear(jra_ds[var][:,:,:]) # ND: changing from 4D to 3D [:,:,:,:]
-
-            # write to file in correct time order
-            for t in range(d.shape[0]):
-                #for n in range(d.shape[1]):
-                 print('indx t = ', t)
-                 data[t,:,:] = d[t,:,:]
-        elif var.find('rlds') > 0: # ave3r in var
-            # use bilinear here
-            d = rgrd_bilinear(jra_ds[var][:,:,:]) # ND: changing from 4D to 3D [:,:,:,:]
-
-            # write to file in correct time order
-            for t in range(d.shape[0]):
-                #for n in range(d.shape[1]):
-                 print('indx t = ', t)
-                 data[t,:,:] = d[t,:,:]
+           # for t in range(2920):# ND: chaning range(d.shape[0]):
+           #     for n in range(d.shape[1]):
+           #      print('indx t = ', t)
+           #      data[t,:,:] = d[t,:,:]
+                             # write to file in correct time order
+            #for t in range(d.shape[0]):
+            #    for n in range(d.shape[1]):
+            #        print('indx (2*t)+n = ', (2*t)+n)
+            #        data[(2*t)+n,:,:] = d[n,:,:]
         else:
             # instantaneous use bilinear
             d = rgrd_bilinear(jra_ds[var][:,:,:]) # ND: changing to 3D
-            
+            print('shape of d', d.shape[0])
             # write to file in correct time order. 
             # note need to write 2nd forecast_time first.
             # in this case first forecast_time is NaN
             #ND: data[0,:,:] = d[0,1,:,:]
-            for t in range(d.shape[0]):
+            for t in range(d.shape[1]): #ND: chaning from shape[0]
                 #for n in range(d.shape[1]):
                  print('indx t = ', t)
                  data[t,:,:] = d[t,:,:]
