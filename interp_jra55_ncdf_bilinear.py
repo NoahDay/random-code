@@ -237,13 +237,13 @@ def get_jra55_nc_dict():
     #             "UGRD_GDS4_HTGL"       : "fcst_surf.033_ugrd.reg_tl319"  , # u velocity
     #             "VGRD_GDS4_HTGL"       : "fcst_surf.034_vgrd.reg_tl319"  , # v velocity
     #             "SPFH_GDS4_HTGL"       : "fcst_surf.051_spfh.reg_tl319"}   # specify humidity
-    jra55dict = {"prsn" : "prsn_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_", # precip (snowfall)
-                 "rsds" : "rsds_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_", # downward shortwave
-                 "rlds" : "rlds_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_", # downward longwave
-                 "tas"  : "tas_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_"   , # air temp
-                 "uas"  : "uas_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_"  , # u velocity
-                 "vas"  : "vas_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_"  , # v velocity
-                 "huss" : "huss_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_"}   # specify humidity
+    jra55dict = {"prsn" : "prsn", # precip (snowfall)
+                 "rsds" : "rsds", # downward shortwave
+                 "rlds" : "rlds", # downward longwave
+                 "tas"  : "tas"   , # air temp
+                 "uas"  : "uas"  , # u velocity
+                 "vas"  : "vas"  , # v velocity
+                 "huss" : "huss"}   # specify humidity
 
     
     return jra55dict
@@ -402,7 +402,7 @@ if __name__ == "__main__":
         
         print("prefix ", fprefix)
         #if var.find('prsn') > 0: # ave3r in var
-        if fprefix in ['prsn_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_','rsds_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_','rlds_input4MIPs_atmosphericState_OMIP_MRI-JRA55-do-1-4-0_gr_']:
+        if fprefix in ['prsn','rsds','rlds']:
             # use bilinear here
             print("IF enacted ", var)
             d = rgrd_bilinear(jra_ds[var][:,:,:]) # ND: changing from 4D to 3D [:,:,:,:]
