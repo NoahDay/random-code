@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-
+# NOAH DAY THIS DOESNT WORK
 import xesmf as xe
 from netCDF4 import Dataset
 import argparse
@@ -38,9 +38,9 @@ def make_regridder(lon1, lat1, lon2, lat2, method, periodic, grdname,
 
     # make regridder
     # here specify reuse_weights=False to re-generate weight file.
-    # if wanted to reuse file inteas of making int, 
-    # check if file exists and change use_file_weights=True. 
-    # see commented out example below 
+    # if wanted to reuse file inteas of making int,
+    # check if file exists and change use_file_weights=True.
+    # see commented out example below
     use_file_weights=False
 
     # check if regrid file exists.
@@ -225,10 +225,10 @@ def get_command_line_args():
 def get_jra55_nc_dict():
     '''
     Create dictionary that links the NetCDF variable name
-    with the file prefix. The file prefix is appended by 
+    with the file prefix. The file prefix is appended by
     JRADTG from command line
     '''
-    # specify dictionary with dataset prefix names 
+    # specify dictionary with dataset prefix names
     jra55dict = {#"TPRAT_GDS4_SFC_ave3h" : "fcst_phy2m.061_tprat.reg_tl319", # precip
                  #"DSWRF_GDS4_SFC_ave3h" : "fcst_phy2m.204_dswrf.reg_tl319", # downward shortwave
                  #"DLWRF_GDS4_SFC_ave3h" : "fcst_phy2m.205_dlwrf.reg_tl319", # downward longwave
@@ -237,7 +237,7 @@ def get_jra55_nc_dict():
                  "VGRD_GDS4_HTGL"       : "fcst_surf.034_vgrd.reg_tl319"  , # v velocity
                  "SPFH_GDS4_HTGL"       : "fcst_surf.051_spfh.reg_tl319"}   # specify humidity
 
-    
+
     return jra55dict
 
 ################################
@@ -248,7 +248,7 @@ def get_jra55_cice_var():
     Make dictionary relating JRA55 NetCDF variables
     to CICE variables.
     '''
-    
+
     # specify output variable names
     # This is for current CICE expected names
     # it might be better to change CICE in long run
@@ -259,7 +259,7 @@ def get_jra55_cice_var():
                 "UGRD_GDS4_HTGL"       : "wndewd",
                 "VGRD_GDS4_HTGL"       : "wndnwd",
                 "SPFH_GDS4_HTGL"       : "spchmd"}
-    
+
     return cice_var
 
 ################################
@@ -281,7 +281,7 @@ def init_ncout(ncout,nc1,llat,llon):
     time  = dsout.createDimension('time',None) # unlimited
     dim_j = dsout.createDimension('dim_j',nlat)
     dim_i = dsout.createDimension('dim_i',nlon)
-    
+
     # create time variable.
     # note is defined as 'times' (with and s) to not conflict
     # with dimension 'time'
@@ -313,7 +313,7 @@ def init_ncout(ncout,nc1,llat,llon):
     # write LON, LAT to file
     LON[:] = llon[:,:]
     LAT[:] = llat[:,:]
-    
+
 
     return dsout
 
@@ -328,15 +328,15 @@ if __name__ == "__main__":
     JRADTG, dstgrid, ncout = get_command_line_args()
 
     # get jra55 variable/filename prefix dictionary
-    
+
     #jra55dict = get_jra55_nc_dict()
 
     # get dictionary linking jra55 variables names
     # and CICE forcing varible names
-    
+
     #cice_var = get_jra55_cice_var()
 
-    # read input grid. 
+    # read input grid.
     # use one of the jra55 files.
     # it is assumed all JRA data are the same grid for later
     fname = f"huss.nc"
@@ -345,8 +345,8 @@ if __name__ == "__main__":
     lon1     = grid1_ds['lon'][:]  # 1D
     lat1     = grid1_ds['lat'][:]  # 1D
 
-    # open destination grid 
-    # here it is assumed a CICE NetCDF file. 
+    # open destination grid
+    # here it is assumed a CICE NetCDF file.
     # the user can update as appropriate
     print("Opening ", dstgrid)
     grid2_ds = Dataset(dstgrid,'r',format='NETCDF3_64BIT_OFFSET')
@@ -363,7 +363,7 @@ if __name__ == "__main__":
     tlon2    = grid2_ds["TLON"][:,:] # 2D. Assumed ULON in degrees
     tlat2    = grid2_ds["TLAT"][:,:] # 2D. Assumed ULAT in degrees
 
-    # make regridders 
+    # make regridders
     print("making bilinear regridder")
     method = "conservative"#'bilinear'
     periodic = True
@@ -389,9 +389,9 @@ if __name__ == "__main__":
 
     # make regridder
     # here specify reuse_weights=False to re-generate weight file.
-    # if wanted to reuse file inteas of making int, 
-    # check if file exists and change use_file_weights=True. 
-    # see commented out example below 
+    # if wanted to reuse file inteas of making int,
+    # check if file exists and change use_file_weights=True.
+    # see commented out example below
     use_file_weights=False
 
     # check if regrid file exists.
@@ -400,7 +400,7 @@ if __name__ == "__main__":
     #     use_file_weights = True
 
     print("lon1:",lon1)
-    print("tlon2:",tlon2)     
+    print("tlon2:",tlon2)
 
     regridder = xe.Regridder(ds_in=grid1,ds_out=grid2,
                              method=method,
@@ -417,7 +417,7 @@ if __name__ == "__main__":
 
     # setup output dataset by adding lat/lon
     dsout = init_ncout(ncout,grid1_ds,tlat2,tlon2)
-    
+
     # no longer need grid1, grid2
     grid1_ds.close()
     grid2_ds.close()
@@ -432,7 +432,7 @@ if __name__ == "__main__":
 
     # make output variable
     data = dsout.createVariable(cice_var[var],'f4',('time','dim_j','dim_i'))
-    
+
     # do interpolation
     print("Interpolating ", var)
 
@@ -449,8 +449,8 @@ if __name__ == "__main__":
       #  else:
         # instantaneous use bilinear
         d = rgrd_bilinear(jra_ds[var][:,:,:,:])
-        
-        # write to file in correct time order. 
+
+        # write to file in correct time order.
         # note need to write 2nd forecast_time first.
         # in this case first forecast_time is NaN
         data[0,:,:] = d[0,1,:,:]
@@ -467,7 +467,7 @@ if __name__ == "__main__":
         data.coordinates = "LON LAT time"
         data.long_name   = jra_ds[var].long_name
         data.units       = jra_ds[var].units
- 
+
         precip_factor = 1. / 86400.
 
         # Convert mm / day to kg/m^2/s.
@@ -476,14 +476,13 @@ if __name__ == "__main__":
             data.units = 'kg/m2/s'
         else:
             data.units       = jra_ds[var].units
-        
+
         # close jra55 file
         jra_ds.close()
 
-    
+
     # write tou output file
     # close output file
     dsout.close()
-        
+
     print("Done")
-    
