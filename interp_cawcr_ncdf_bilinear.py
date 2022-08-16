@@ -328,7 +328,7 @@ if __name__ == "__main__":
     # do the regridding
     # Loop over all the files using regridder from above
     # and add to dataout
-    fname = f"gridded_ww3.glob_24m.201001.nc"
+    #fname = f"gridded_ww3.glob_24m.201001.nc"
     print("Opening file: ", fname)
     raw_ds = Dataset(fname,'r',format='NETCDF3_CLASSIC')
 
