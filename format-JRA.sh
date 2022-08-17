@@ -14,9 +14,15 @@ do
     var=${dir1##*/}
     filename=()
     # Store the filename
+    # For prsn, rsds, rlds
     while IFS=  read -r -d $'\0'; do
         filename+=("$REPLY")
-    done < <(find ${dir} -name "*${year}*" -print0)
+    done < <(find ${dir} -name "*${year}01010130*" -print0)
+    # For tas, uas, vas, huss
+    while IFS=  read -r -d $'\0'; do
+        filename+=("$REPLY")
+    done < <(find ${dir} -name "*${year}01010000*" -print0)
+
     # 1.
     echo " "
     echo "Copying over ${filename##*/} to interp work directory"

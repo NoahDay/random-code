@@ -345,12 +345,12 @@ if __name__ == "__main__":
         data = dsout.createVariable(var,'f4',('time','dim_j','dim_i'))
         print("Variable: ", var)
         d = rgrd_bilinear(raw_ds[var][:,:,:]) # ND: changing to 3D
-        print('shape of d', d.shape[1])
+        print('shape of d', d.shape[0])
         # write to file in correct time order.
         # note need to write 2nd forecast_time first.
         # in this case first forecast_time is NaN
         #ND: data[0,:,:] = d[0,1,:,:]
-        for t in range(d.shape[1]): #ND: chaning from shape[0]
+        for t in range(d.shape[0]): #ND: chaning from shape[0]
             #for n in range(d.shape[1]):
              print('indx t = ', t)
              data[t,:,:] = d[t,:,:]

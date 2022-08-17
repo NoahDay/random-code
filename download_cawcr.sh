@@ -2,12 +2,12 @@
 
 WGET='/usr/bin/wget'
 
-YEAR='2000'
+YEAR='2010'
 MONTH='01'
-MONTHEND='02'
+MONTHEND='02' # MONTH + 1
 DAY='01'
 StartSeq='0'
-EndSeq='1'
+EndSeq='12'
 
 NCSS='https://data-cbr.csiro.au/thredds/ncss/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded'
 MODEL='ww3.glob_24m.'
@@ -37,7 +37,7 @@ for PlusMonth in `seq $StartSeq $EndSeq`; do
   TimeEnd="$TimeEnd$TimeEndSuf"
 
 
-  URL="$NCSS/$MODEL$YEAR$MONTH.nc?$VARS&$Subset&$SPATIAL&$TimeStart&$TimeEnd&$TimeStride&addLatLon=true&accept=netcdf"
+  URL="$NCSS/$MODEL$YearOut$MonthOut.nc?$VARS&$Subset&$SPATIAL&$TimeStart&$TimeEnd&$TimeStride&addLatLon=true&accept=netcdf"
 
 #  URL="https://data-cbr.csiro.au/thredds/ncss/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded/ww3.glob_24m.201612.nc?var=dir&var=fp&var=hs&disableLLSubset=on&disableProjSubset=on&horizStride=1&time_start=2016-12-01T00%3A00%3A00Z&time_end=2016-12-31T23%3A00%3A00Z&timeStride=1&addLatLon=true&accept=netcdf"
 
