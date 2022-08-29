@@ -9,16 +9,16 @@
 
 # Testing for looping over directories
 #i=0
-for dir in /g/data/ik11/outputs/access-om2/1deg_jra55_iaf_omip2_cycle6/output*/
+search_dir=/g/data/ik11/outputs/access-om2-01/01deg_jra55v140_iaf_cycle3/output
+for dir in /g/data/ik11/outputs/access-om2-01/01deg_jra55v140_iaf_cycle3/output*/
 do
 	echo "Copying over to scratch.."
-	dir=${dir%*/}      # remove the trailing "/"
-	#echo "${dir##*/}" # print everytjhing after the final /
-	#echo "${dir}"
-	ocndir="/ocean/ocean_month.nc"
+    echo "${dir}"
+
 	# Get the directories for files starting with ocean-3d-temp-1-daily-mean-ym_20
-	for file in ${dir}$"ocean/ocean-3d-temp-1-daily-mean-ym_20*"
-	do
+	#for file in ${dir}/ocean/ocean-3d-temp-1-daily-mean-ym_20*
+    for file in "${dir}"ocean/ocean-3d-temp-1-daily-mean-ym_20*
+    do
 		#filename=${dir##*/}$".nc"
 		echo ${file}
 		#filedir=${dir}$ocndir
