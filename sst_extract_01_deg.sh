@@ -13,15 +13,27 @@ search_dir=/g/data/ik11/outputs/access-om2-01/01deg_jra55v140_iaf_cycle3/output
 for dir in /g/data/ik11/outputs/access-om2-01/01deg_jra55v140_iaf_cycle3/output*/
 do
 	echo "Copying over to scratch.."
-    echo "${dir}"
+    #echo "${dir}"
 
 	# Get the directories for files starting with ocean-3d-temp-1-daily-mean-ym_20
 	#for file in ${dir}/ocean/ocean-3d-temp-1-daily-mean-ym_20*
-    for file in "${dir}"ocean/ocean-3d-temp-1-daily-mean-ym_20*
+    for file in "${dir}"ocean/ocean-3d-temp-1-daily-mean-ym_2017*
     do
-		#filename=${dir##*/}$".nc"
+		filename=${file##*/}
+        filename="ocean-2d-surface_pot_temp-1-daily-mean-ym_20"${file##*20}
 		echo ${file}
+        #echo ${file##*/}
+          echo ${filename}
 		#filedir=${dir}$ocndir
+        #cp ${file} /scratch/df0/nd0349
+        # 2.
+        #cdo selvar,temp ${file} temp.nc
+        # 3.
+        #ncrcat -d st_ocean,1 ${file} ${filename}
+        cdo select,levidx=1 ${file} ${filename}
+        echo "${filename} formatted!"
+        # 4.
+        #rm temp.nc
 	done
 	# 1.
 	#cp filedir /scratch/df0/ndo0349
@@ -51,3 +63,7 @@ done
 
 # 4.
 #rm temp.nc
+
+
+
+# /g/data/ik11/outputs/access-om2-01/01deg_jra55v140_iaf_cycle4_jra55v150_extension/output992/ocean/ocean-3d-u-1-monthly-mean-ym_2019_01.nc
