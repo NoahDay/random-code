@@ -2,12 +2,12 @@
 
 WGET='/usr/bin/wget'
 
-YEAR='2010'
+YEAR='2000'
 MONTH='01'
 MONTHEND='02' # MONTH + 1
 DAY='01'
 StartSeq='0'
-EndSeq='12'
+EndSeq='19' # Download EndSeq + 1 years
 
 NCSS='https://data-cbr.csiro.au/thredds/ncss/catch_all/CMAR_CAWCR-Wave_archive/CAWCR_Wave_Hindcast_aggregate/gridded'
 MODEL='ww3.glob_24m.'
