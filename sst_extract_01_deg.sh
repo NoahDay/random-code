@@ -21,6 +21,7 @@ do
     do
 		filename=${file##*/}
         filename="ocean-2d-surface_pot_temp-1-daily-mean-ym_20"${file##*20}
+        echo ${file##*20}
 		echo ${file}
         #echo ${file##*/}
           echo ${filename}
@@ -30,7 +31,7 @@ do
         #cdo selvar,temp ${file} temp.nc
         # 3.
         #ncrcat -d st_ocean,1 ${file} ${filename}
-        cdo select,levidx=1 ${file} ${filename}
+        # cdo select,levidx=1 ${file} ${filename}
         echo "${filename} formatted!"
         # 4.
         #rm temp.nc
